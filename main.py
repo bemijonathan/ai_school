@@ -1,16 +1,20 @@
-# This is a sample Python script.
+from flask import Flask, request
 
-# Press ⌃F5 to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
+import pdf_hanlder  #handlers related to pdf
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+app = Flask("ai_school")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+@app.route("/uploadpdf", methods = ['POST', 'DELETE'])
+def upload_pdf():
+    if request.method == 'POST':   
+        result = pdf_hanlder.saveThePdf(request)
+    #error checking
+    
+    return result
+
+
+@app.route("/")
+def hello_world():
+    return "<p>Welcome to AI - SCHOOL</p>"
+
