@@ -1,0 +1,29 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - "releases/*"
+      - master
+
+jobs:
+  test-action:
+    name: GitHub Actions Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test Local Action
+        id: test-action
+        uses: bemijonathan/Woot@1.0.3
+        with:
+          gitHubToken: ${{ secrets.GIT_HUB_TOKEN }}
+          openAIKey: ${{ secrets.OPENAI_API_KEY }}
+          jiraEmail: ${{ secrets.JIRA_EMAIL }}
+          jiraApiKey: ${{ secrets.JIRA_API_KEY }}
+          jiraHost: ${{ secrets.JIRA_HOST }}
+
+      - name: Print Output
+        id: output
+        run: echo "${{ steps.test-action.outputs.time }}"
